@@ -1,0 +1,32 @@
+version: '3.3'
+services: 
+    rymfrontend:
+        build: ./rymapp
+        container_name: rymapp
+        image: rymapp
+        restart: always
+        ports:
+          - "3000:80"
+#    mongo:
+#        image: mongo:bionic
+#        volumes:
+#            - ./data:/data/db
+#        ports:
+#            - '27017:27017'
+#        command: mongod --dbpath /data/db
+    redis:
+        image: redis:rc-buster
+    rymbackend:
+        build: ./rymserver
+        container_name: rymserver
+        image: rymserver
+        restart: always
+        ports:
+            - "5000:5000"
+        command: npm start
+        depends_on:
+            - redis
+#            - mongo
+        links:
+#            - mongo:27017
+            - redis:6379
