@@ -1,0 +1,16 @@
+cache:
+  paths:
+    - node_modules/
+stages:
+  - build
+  - test
+
+build: 
+  stage: build
+  script:
+    npm run build && npm start
+
+test: 
+  stage: test
+  script:
+    npm run test
