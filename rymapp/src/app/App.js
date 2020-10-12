@@ -24,7 +24,7 @@ export default function App() {
       }
       <footer className={classes.footer}>
         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-          2020 Vought Corp.
+          2020 R&M Corp.
         </Typography>
       </footer>
       {/* End footer */}

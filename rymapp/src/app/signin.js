@@ -8,11 +8,13 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import { useHistory, Redirect } from 'react-router-dom'
 
 import { useStyles } from './styles/signinStyles';
 import { baseUrl } from '../common/baseUrl';
 
 export default function SignIn() {
+  const history = useHistory();
   const classes = useStyles();
   const [formContent, setFormContent] = useState( {username: '', password: ''});
 
@@ -26,7 +28,7 @@ export default function SignIn() {
 
   function handleSubmit(e){
     e.preventDefault();
-    fetch(baseUrl+'users/', {
+    fetch(baseUrl+'users/login', {
       method: 'POST',
       headers:{
         'Content-Type': 'application/json'
@@ -46,6 +48,7 @@ export default function SignIn() {
       sessionStorage.setItem('loggedin', true)
       sessionStorage.setItem('token', res.token)
       sessionStorage.setItem('username', res.username)
+      history.push("/gallery")
     })
     .catch(e => {
       alert('¡Hubo un error! Intenta nuevamente')

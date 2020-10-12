@@ -10,27 +10,52 @@ import Typography from '@material-ui/core/Typography';
 
 import { useStyles, bounce } from './styles/styles';
 import { baseUrl } from '../common/baseUrl';
-import CharacterDet from './characterDetails';
+import Characters from './characters';
 
 export default function Gallery(){
     const classes = useStyles();
 
-    const [character, setHeroe] = useState('');
-    const [characterDetails, setcharacterDetails] = useState(null);
+    const [character, setCharacter] = useState('');
+    const [allCharacters, setallCharacters] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
   
     useEffect(() => {
-      handleSubmit()
+      setIsLoading(true)
+      fetch(`${baseUrl}characters/`, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-type': 'application/json'
+        }
+      })
+      .then(res => {
+        if(res.ok){
+          return res
+        } else {
+          setIsLoading(false)
+          alert('Error de conexión')
+        }
+      })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res)
+        setallCharacters(res);
+        setIsLoading(false);
+        console.log(allCharacters)
+      })
+      .catch(e => {
+        console.log(e);
+        setIsLoading(false);
+      })
     }, [])
   
     function handleChange(e){
       e.preventDefault();
-      setHeroe(e.target.value);
+      setCharacter(e.target.value);
     }
   
     function handleSubmit(){
       setIsLoading(true)
-      fetch(baseUrl+character, {
+      fetch(`${baseUrl}characters/${character}`, {
         headers :{
           'Access-Control-Allow-Origin': '*',
           'Content-type': 'application/json'
@@ -46,7 +71,7 @@ export default function Gallery(){
       .then(res => res.json())
       .then(res => {
         console.log(res)
-        setcharacterDetails(res);
+        setallCharacters(res);
         setIsLoading(false);
       })
       .catch(e => {
@@ -59,11 +84,11 @@ export default function Gallery(){
             <div className={classes.heroContent}>
             <Container maxWidth="sm">
                 <motion.div transition={ bounce } animate={{ y: ['0%', '-50%'] }}>
-                <Typography component="h2" variant="h2" align="center" color="textPrimary" gutterBottom>
+                <Typography component="h2" variant="h3" align="center" color="textPrimary" gutterBottom>
                     Galería Rick & Morty
                 </Typography>
                 </motion.div>
-                <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                <Typography variant="h6" align="center" color="textSecondary" paragraph>
                   ¡Busca tus personajes favoritos!
                 </Typography>
             </Container>
@@ -93,9 +118,9 @@ export default function Gallery(){
             <Container className={classes.cardGrid} maxWidth="md">
             {/* End hero unit */}
             <Grid container spacing={4} minHeight="500px">
-                <CharacterDet
-                characterDetails={characterDetails}
-                isLoading={isLoading}
+                <Characters
+                  allCharacters={allCharacters}
+                  isLoading={isLoading}
                 />
             </Grid>
             </Container>

@@ -44,8 +44,8 @@ function  Main() {
                     <Route path = "/home" component = {HomePage} />
                     <Route path = "/signin" component = {SignInPage} />
                     <Route path = "/signup" component = {SignUpPage} />
-                    <Route path = "/gallery" component = {GalleryPage} />
-                    { /*<WithAuth path="/gallery"> <GalleryPage /> </WithAuth> */}
+                    { /*<Route path = "/gallery" component = {GalleryPage} />*/ }
+                    <WithAuth path="/gallery"> <GalleryPage /> </WithAuth>
                     <Redirect to = "/home"></Redirect>
                 </Switch>
             </div>

@@ -17,7 +17,7 @@ import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 
 import { useStyles } from './styles/styles';
 
-export default function CharacterDet(props){
+export default function Characters(props){
     const classes = useStyles();
 
     if(props.isLoading){
@@ -26,10 +26,10 @@ export default function CharacterDet(props){
                 <CircularProgress />
             </div>
         )
-    } else if(props.characterDetails !== null && props.characterDetails.results !== undefined){
+    } else if(props.allCharacters !== null && props.allCharacters.results !== undefined){
         return(
             <React.Fragment>
-                {props.characterDetails.results.map(res => (
+                {props.allCharacters.results.map(res => (
                     <Grid item xs={12} sm={6} md={4} key={res.id}>
                         <Card className={classes.card}>
                             <CardMedia

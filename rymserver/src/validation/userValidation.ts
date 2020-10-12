@@ -2,16 +2,17 @@ import express, { Request } from 'express';
 import Joi from 'joi';
 
 export const registerValidation: any = Joi.object({
-        username: Joi.string()
-            .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'cl', 'es', 'org'] } }),
 
-        firstName: Joi.string()
+    username: Joi.string()
+    .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'cl', 'es', 'org'] } }),
+
+        firstname: Joi.string()
             .alphanum()
             .min(3)
             .max(20)
             .required(),
 
-        lastName: Joi.string()
+        lastname: Joi.string()
             .alphanum()
             .min(3)
             .max(20)
@@ -23,7 +24,7 @@ export const registerValidation: any = Joi.object({
         password: Joi.string()
             .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
 
-        repeat_password: Joi.ref('password'),
+//        repeat_password: Joi.ref('password'),
 
         access_token: [
             Joi.string(),
@@ -32,7 +33,7 @@ export const registerValidation: any = Joi.object({
     })
     .with('firstName', 'lastName')
     .xor('password', 'access_token')
-    .with('password', 'repeat_password')
+//    .with('password', 'repeat_password')
 
 
 
