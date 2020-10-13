@@ -21,7 +21,7 @@ code {
 /* visited link */
 a:visited {
   text-decoration: none;
-  color:  none;
+  color:  #ffffff;
 }
 
 /* mouse over link  */

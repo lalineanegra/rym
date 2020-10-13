@@ -8,13 +8,15 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import { useHistory, Redirect } from 'react-router-dom'
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { useHistory } from 'react-router-dom'
 
 import { useStyles } from './styles/signinStyles';
 import { baseUrl } from '../common/baseUrl';
 
 export default function SignIn() {
   const history = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
   const classes = useStyles();
   const [formContent, setFormContent] = useState( {username: '', password: ''});
 
@@ -28,6 +30,7 @@ export default function SignIn() {
 
   function handleSubmit(e){
     e.preventDefault();
+    setIsLoading(true);
     fetch(baseUrl+'users/login', {
       method: 'POST',
       headers:{
@@ -48,10 +51,12 @@ export default function SignIn() {
       sessionStorage.setItem('loggedin', true)
       sessionStorage.setItem('token', res.token)
       sessionStorage.setItem('username', res.username)
+      setIsLoading(false);
       history.push("/gallery")
     })
     .catch(e => {
       alert('¡Hubo un error! Intenta nuevamente')
+      setIsLoading(false);
     })
   }
 
@@ -103,10 +108,16 @@ export default function SignIn() {
             value="submit"
           >
             Iniciar Sesión
+            {
+              isLoading?
+              <div className={classes.circ} style={{'marginLeft': '1em'}}>
+                <CircularProgress color="white" size={20}/>
+              </div>: ''
+            }
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/signup" variant="body2">
                 {"¿No tienes una cuenta? Inscríbete aquí"}
               </Link>
             </Grid>

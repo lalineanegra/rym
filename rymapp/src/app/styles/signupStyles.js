@@ -17,5 +17,18 @@ export const useStyles = makeStyles((theme) => ({
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
+      backgroundColor: '#d18419'
     },
+    alertClass: {
+      width: '100%',
+      '& > * + *': {
+        marginTop: theme.spacing(2),
+      },
+    },
+    circ: {
+      display: 'flex',
+      '& > * + *': {
+        marginLeft: theme.spacing(2),
+      }
+    }
   }));

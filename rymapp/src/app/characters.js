@@ -8,12 +8,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
-import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
-import FlashOnIcon from '@material-ui/icons/FlashOn';
-import BatteryChargingFullIcon from '@material-ui/icons/BatteryChargingFull';
-import SportsKabaddiIcon from '@material-ui/icons/SportsKabaddi';
-import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import LanguageIcon from '@material-ui/icons/Language';
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
+import BugReportIcon from '@material-ui/icons/BugReport';
 
 import { useStyles } from './styles/styles';
 
@@ -43,25 +41,25 @@ export default function Characters(props){
                                 </Typography>
                                 <ListItem button >
                                     <ListItemIcon>
-                                        <EmojiObjectsIcon />
+                                        <BugReportIcon />
                                     </ListItemIcon>
                                     <ListItemText primary={`Especie ${res.species?res.species: ''}`} />
                                 </ListItem>
                                 <ListItem button >
                                     <ListItemIcon>
-                                        <FitnessCenterIcon />
+                                        <SupervisedUserCircleIcon />
                                     </ListItemIcon>
                                     <ListItemText primary={`Género ${res.gender?res.gender:'' }`} />
                                 </ListItem>
                                 <ListItem button >
                                     <ListItemIcon>
-                                        <DirectionsRunIcon />
+                                        <LanguageIcon />
                                     </ListItemIcon>
                                     <ListItemText primary={`Origen ${res.origin.name?res.origin.name:'' }`} />
                                 </ListItem>
                                 <ListItem button >
                                      <ListItemIcon>
-                                        <BatteryChargingFullIcon />
+                                        <FavoriteIcon />
                                     </ListItemIcon>
                                     <ListItemText primary={`Status ${res.status?res.status: ''}`} />
                                 </ListItem>

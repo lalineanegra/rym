@@ -6,6 +6,7 @@ export const useStyles = makeStyles((theme) => ({
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
+      minHeight: '50em'
     },
     avatar: {
       margin: theme.spacing(1),
@@ -17,5 +18,12 @@ export const useStyles = makeStyles((theme) => ({
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
+      backgroundColor: '#d18419'
     },
+    circ: {
+      display: 'flex',
+      '& > * + *': {
+        marginLeft: theme.spacing(2),
+      }
+    }
   }));

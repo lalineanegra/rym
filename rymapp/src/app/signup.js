@@ -8,7 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import { useHistory, Redirect } from 'react-router-dom'
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { useHistory } from 'react-router-dom'
 
 import { useStyles } from './styles/signupStyles';
 import { baseUrl } from '../common/baseUrl';
@@ -16,6 +17,7 @@ import { baseUrl } from '../common/baseUrl';
 export default function SignUp() {
   const history = useHistory();
   const classes = useStyles();
+  const [isLoading, setIsLoading] = useState(false);
   const [formContent, setFormContent] = useState({firstname: '', lastname: '', email: '', password: ''});
   const [touched, setTouched] = useState({firstname: '', lastname: '', email: '', password: ''})
   const errors = validate(formContent.firstname, formContent.lastname, formContent.email, formContent.password)
@@ -64,6 +66,7 @@ export default function SignUp() {
 
   function handleSubmit(e){
     e.preventDefault();
+    setIsLoading(true);
     const sendForm = {...formContent, username: formContent.email }
     fetch(baseUrl+'users/signup', {
       method: 'POST',
@@ -74,16 +77,18 @@ export default function SignUp() {
       credentials: 'same-origin'
     })
     .then( res => {
-      if(!res.ok) throw new Error(`${res.status}: usuario existente`);
-      else return res
+      if(!res.ok) { throw new Error(`${res.status}: usuario existente`)
+      } else { setIsLoading(false); return res}
     })
     .then(res => res.json())
     .then(res => {
       sessionStorage.setItem('loggedin', true)
       sessionStorage.setItem('email', res.email)
+      setIsLoading(false);
       history.push("/gallery")
     })
     .catch(e => {
+      setIsLoading(false);
       console.log(e)
       alert(`Hubo un error: ${e}`)
     })
@@ -177,10 +182,16 @@ export default function SignUp() {
             className={classes.submit}
           >
             Enviar
+            {
+              isLoading?
+              <div className={classes.circ} style={{'marginLeft': '1em'}}>
+                <CircularProgress color="white" size={20}/>
+              </div>: ''
+            }
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/signin" variant="body2">
                 ¿Ya tienes una cuenta? Inicia sesión aquí
               </Link>
             </Grid>

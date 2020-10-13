@@ -1,7 +1,7 @@
 import createError, { HttpError } from 'http-errors';
 import express, { Application, Request, Response, NextFunction} from 'express';
 import logger from 'morgan';
-import redis, { RedisClient } from 'redis';
+import redis from 'redis';
 import session from 'express-session';
 import passport from 'passport';
 
@@ -20,10 +20,9 @@ app.use(express.urlencoded({ extended: false }));
 import mongoose from 'mongoose';
 mongoose.Promise = require('bluebird');
 
-
 //Setup database connection
-//const url = process.env.MONGODB_URL || 'mongodb://mongo:27017/rym';
-const url = process.env.MONGODB_URL || 'mongodb://localhost:27017/rym';
+const url = process.env.MONGODB_URL || 'mongodb://mongo:27017/rym';
+//const url = process.env.MONGODB_URL || 'mongodb://localhost:27017/rym';
 const connect = mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true } );
 
 connect.then((db) => {
@@ -31,12 +30,16 @@ connect.then((db) => {
 }, (err) => {console.log(err); });
 
 // Start Redis client
-const redisPort: any = process.env.REDIS_PORT || 6379;
-const host = process.env.REDIS_NAME || '127.0.0.1';
-let redisClient: RedisClient = redis.createClient(redisPort, host);
+const redisClient = redis.createClient(6379, 'redis');
 redisClient.on('connect', () => {
-  console.log('connected to Redis...')
+	console.log('connected to Redis...')
 })
+// const redisPort: any = process.env.REDIS_PORT || 6379;
+// const host = process.env.REDIS_NAME || '127.0.0.1';
+// let redisClient: RedisClient = redis.createClient(redisPort, host);
+// redisClient.on('connect', () => {
+//   console.log('connected to Redis...')
+// })
 redisClient.on("error", function (err: Error) {
   console.log("Redis error encountered", err);
 });
@@ -44,7 +47,7 @@ redisClient.on("error", function (err: Error) {
 //Express session
 app.use(session({
 	store: new RedisStore({ host: 'localhost', port: 6379, client: redisClient }),
-	secret: '3115kbxd5gg8h6f64wq5dj4d2b3hs8fgh',
+	secret: '3115kbxyz',
 	name: '_rymDemo',
 	resave: true,
 	saveUninitialized: true,
